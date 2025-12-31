@@ -119,14 +119,25 @@ export const HUD: React.FC = () => {
                 <div className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,255,255,0.2)] border border-white/10 animate-in zoom-in-95 duration-500">
                     <div className="relative w-full bg-gray-900">
                         <img
-                            src="./pluto-runner.png"
+                            src="/pluto-runner.png"
                             alt="Neon Runner Cover"
                             className="w-full h-auto block"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050011] via-black/30 to-transparent"></div>
                         <div className="absolute inset-0 flex flex-col justify-end items-center p-6 pb-8 text-center z-10">
                             <button
-                                onClick={() => { audio.init(); startGame(); }}
+                                onClick={(e) => { 
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    console.log('Start button clicked');
+                                    try {
+                                        audio.init(); 
+                                    } catch (err) {
+                                        console.warn('Audio init failed:', err);
+                                    }
+                                    console.log('Calling startGame');
+                                    startGame(); 
+                                }}
                                 className="w-full group relative px-6 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-black text-xl rounded-xl hover:bg-white/20 transition-all shadow-[0_0_20px_rgba(0,255,255,0.2)] hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] hover:border-cyan-400 overflow-hidden"
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/40 via-purple-500/40 to-pink-500/40 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
@@ -168,7 +179,14 @@ export const HUD: React.FC = () => {
                         </div>
                     </div>
                     <button
-                        onClick={() => { audio.init(); restartGame(); }}
+                        onClick={() => { 
+                            try {
+                                audio.init(); 
+                            } catch (e) {
+                                console.warn('Audio init failed:', e);
+                            }
+                            restartGame(); 
+                        }}
                         className="px-8 md:px-10 py-3 md:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg md:text-xl rounded hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,255,255,0.4)]"
                     >
                         RUN AGAIN
@@ -206,7 +224,14 @@ export const HUD: React.FC = () => {
                         </div>
                     </div>
                     <button
-                        onClick={() => { audio.init(); restartGame(); }}
+                        onClick={() => { 
+                            try {
+                                audio.init(); 
+                            } catch (e) {
+                                console.warn('Audio init failed:', e);
+                            }
+                            restartGame(); 
+                        }}
                         className="px-8 md:px-12 py-4 md:py-5 bg-white text-black font-black text-lg md:text-xl rounded hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.3)] tracking-widest"
                     >
                         RESTART MISSION
